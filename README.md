@@ -17,8 +17,8 @@ Components Used
 
 Project Structure
 
-📂 esp32_ldr_mqtt.ino → ESP32 firmware for reading the LDR sensor and publishing MQTT messages.
-📂 node-red-flow.json → Node-RED flow for processing and visualizing the sensor data.
+📂 pw2.ino → ESP32 firmware for reading the LDR sensor and publishing MQTT messages.
+📂 flows.json → Node-RED flow for processing and visualizing the sensor data.
 📂 README.md → Project documentation.
 
 Setup Instructions
