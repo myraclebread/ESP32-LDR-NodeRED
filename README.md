@@ -4,8 +4,11 @@ This project integrates an ESP32 with an LDR (Light Dependent Resistor) sensor t
 Features
 
 ✅ ESP32 reads LDR sensor data and converts it to a percentage (1-100%).
+
 ✅ MQTT communication using the EMQX Cloud broker.
+
 ✅ Node-RED flow for real-time data visualization and analysis.
+
 ✅ Dynamic lighting condition labels (e.g., Dark, Bright, Very Bright).
 
 Components Used
