@@ -1,0 +1,292 @@
+[
+    {
+        "id": "85e948402e8c26f5",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b5e044fd564764f1",
+        "type": "mqtt in",
+        "z": "85e948402e8c26f5",
+        "name": "",
+        "topic": "uwu/sensor/ldr",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "efbdb763ac83909d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 240,
+        "wires": [
+            [
+                "b999c7b24d95d055"
+            ]
+        ]
+    },
+    {
+        "id": "5fccc5fa119c5190",
+        "type": "ui_chart",
+        "z": "85e948402e8c26f5",
+        "name": "",
+        "group": "bd254d873ba96cd5",
+        "order": 0,
+        "width": "8",
+        "height": "6",
+        "label": "LDR Sensor Data (%)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "auto",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 940,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "31ef79821e46640c",
+        "type": "debug",
+        "z": "85e948402e8c26f5",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "b355968241110185",
+        "type": "function",
+        "z": "85e948402e8c26f5",
+        "name": "Convert LDR to %",
+        "func": "let data = JSON.parse(msg.payload); \nmsg.payload = data.brightness; // Extract only brightness percentage\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 240,
+        "wires": [
+            [
+                "31ef79821e46640c",
+                "5fccc5fa119c5190",
+                "e7d4c6929166ae53"
+            ]
+        ]
+    },
+    {
+        "id": "38bce5a42d26acb5",
+        "type": "change",
+        "z": "85e948402e8c26f5",
+        "name": "Prepare to clear data",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "[]",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 340,
+        "wires": [
+            [
+                "5fccc5fa119c5190"
+            ]
+        ]
+    },
+    {
+        "id": "80d9f4593358a644",
+        "type": "inject",
+        "z": "85e948402e8c26f5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "180",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 340,
+        "wires": [
+            [
+                "38bce5a42d26acb5"
+            ]
+        ]
+    },
+    {
+        "id": "e7d4c6929166ae53",
+        "type": "function",
+        "z": "85e948402e8c26f5",
+        "name": "Determine Brightness",
+        "func": "let brightness = Number(msg.payload);\n\n// Define brightness levels\nif (brightness >= 60) {\n    msg.payload = \"Very Bright\";\n} else if (brightness >= 30) {\n    msg.payload = \"Bright\";\n} else {\n    msg.payload = \"Dark\";\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 300,
+        "wires": [
+            [
+                "29436748dff24079"
+            ]
+        ]
+    },
+    {
+        "id": "29436748dff24079",
+        "type": "ui_text",
+        "z": "85e948402e8c26f5",
+        "group": "bd254d873ba96cd5",
+        "order": 1,
+        "width": "2",
+        "height": "2",
+        "name": "",
+        "label": "Brightness Level Display",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 950,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "b999c7b24d95d055",
+        "type": "json",
+        "z": "85e948402e8c26f5",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 310,
+        "y": 160,
+        "wires": [
+            [
+                "b355968241110185"
+            ]
+        ]
+    },
+    {
+        "id": "efbdb763ac83909d",
+        "type": "mqtt-broker",
+        "name": "mqtt broker",
+        "broker": "broker.emqx.io",
+        "port": "1883",
+        "tls": "695940ee1c6c54f6",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "bd254d873ba96cd5",
+        "type": "ui_group",
+        "name": "LDR Sensor Data",
+        "tab": "0c120b929ce21277",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "695940ee1c6c54f6",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "0c120b929ce21277",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
