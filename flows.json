@@ -1,6 +1,6 @@
 [
     {
-        "id": "85e948402e8c26f5",
+        "id": "1ff1459640c0f8b6",
         "type": "tab",
         "label": "Flow 1",
         "disabled": false,
@@ -8,30 +8,32 @@
         "env": []
     },
     {
-        "id": "b5e044fd564764f1",
+        "id": "8901033ba916678a",
         "type": "mqtt in",
-        "z": "85e948402e8c26f5",
+        "z": "1ff1459640c0f8b6",
         "name": "",
-        "topic": "uwu/sensor/ldr",
-        "qos": "0",
+        "topic": "none",
+        "qos": "2",
         "datatype": "auto-detect",
-        "broker": "efbdb763ac83909d",
+        "broker": "",
         "nl": false,
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 160,
-        "y": 240,
+        "x": 130,
+        "y": 180,
         "wires": [
             [
-                "b999c7b24d95d055"
+                "121ab36fa14229dc",
+                "70df59e1df98b8d5",
+                "deec7a02ed6614fe"
             ]
         ]
     },
     {
-        "id": "5fccc5fa119c5190",
+        "id": "121ab36fa14229dc",
         "type": "ui_chart",
-        "z": "85e948402e8c26f5",
+        "z": "1ff1459640c0f8b6",
         "name": "",
         "group": "bd254d873ba96cd5",
         "order": 0,
@@ -66,16 +68,16 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 940,
-        "y": 180,
+        "x": 720,
+        "y": 240,
         "wires": [
             []
         ]
     },
     {
-        "id": "31ef79821e46640c",
+        "id": "deec7a02ed6614fe",
         "type": "debug",
-        "z": "85e948402e8c26f5",
+        "z": "1ff1459640c0f8b6",
         "name": "debug 1",
         "active": true,
         "tosidebar": true,
@@ -85,36 +87,14 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 500,
-        "y": 100,
+        "x": 680,
+        "y": 80,
         "wires": []
     },
     {
-        "id": "b355968241110185",
-        "type": "function",
-        "z": "85e948402e8c26f5",
-        "name": "Convert LDR to %",
-        "func": "let data = JSON.parse(msg.payload); \nmsg.payload = data.brightness; // Extract only brightness percentage\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 470,
-        "y": 240,
-        "wires": [
-            [
-                "31ef79821e46640c",
-                "5fccc5fa119c5190",
-                "e7d4c6929166ae53"
-            ]
-        ]
-    },
-    {
-        "id": "38bce5a42d26acb5",
+        "id": "b8b5d8120f90ac43",
         "type": "change",
-        "z": "85e948402e8c26f5",
+        "z": "1ff1459640c0f8b6",
         "name": "Prepare to clear data",
         "rules": [
             {
@@ -130,18 +110,18 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 480,
-        "y": 340,
+        "x": 400,
+        "y": 320,
         "wires": [
             [
-                "5fccc5fa119c5190"
+                "121ab36fa14229dc"
             ]
         ]
     },
     {
-        "id": "80d9f4593358a644",
+        "id": "bb38ad20b9e63d14",
         "type": "inject",
-        "z": "85e948402e8c26f5",
+        "z": "1ff1459640c0f8b6",
         "name": "",
         "props": [
             {
@@ -159,18 +139,18 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 170,
-        "y": 340,
+        "x": 150,
+        "y": 320,
         "wires": [
             [
-                "38bce5a42d26acb5"
+                "b8b5d8120f90ac43"
             ]
         ]
     },
     {
-        "id": "e7d4c6929166ae53",
+        "id": "70df59e1df98b8d5",
         "type": "function",
-        "z": "85e948402e8c26f5",
+        "z": "1ff1459640c0f8b6",
         "name": "Determine Brightness",
         "func": "let brightness = Number(msg.payload);\n\n// Define brightness levels\nif (brightness >= 60) {\n    msg.payload = \"Very Bright\";\n} else if (brightness >= 30) {\n    msg.payload = \"Bright\";\n} else {\n    msg.payload = \"Dark\";\n}\n\nreturn msg;\n",
         "outputs": 1,
@@ -179,18 +159,18 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 480,
-        "y": 300,
+        "x": 720,
+        "y": 160,
         "wires": [
             [
-                "29436748dff24079"
+                "3094f866a7430564"
             ]
         ]
     },
     {
-        "id": "29436748dff24079",
+        "id": "3094f866a7430564",
         "type": "ui_text",
-        "z": "85e948402e8c26f5",
+        "z": "1ff1459640c0f8b6",
         "group": "bd254d873ba96cd5",
         "order": 1,
         "width": "2",
@@ -204,57 +184,177 @@
         "font": "",
         "fontSize": 16,
         "color": "#000000",
-        "x": 950,
-        "y": 300,
+        "x": 970,
+        "y": 160,
         "wires": []
     },
     {
-        "id": "b999c7b24d95d055",
-        "type": "json",
-        "z": "85e948402e8c26f5",
-        "name": "",
-        "property": "payload",
-        "action": "str",
-        "pretty": false,
-        "x": 310,
-        "y": 160,
+        "id": "7afa46c45bd4ed09",
+        "type": "mysql",
+        "z": "1ff1459640c0f8b6",
+        "mydb": "",
+        "name": "mysql",
+        "x": 630,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "11676f1fa1b63897",
+        "type": "function",
+        "z": "1ff1459640c0f8b6",
+        "name": "database",
+        "func": "msg.ldrValue = Number(msg.payload);\n\nvar out = \"INSERT INTO sensor_data (id, sensor_value,timestamp)\"\nout = out + \"VALUES ('\" + \"''\" + \"','\" + msg.ldrValue +\"','\" + new Date().toISOString() + \"');\" \n\n    \nmsg.topic=out;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 440,
         "wires": [
             [
-                "b355968241110185"
+                "7afa46c45bd4ed09"
             ]
         ]
     },
     {
-        "id": "efbdb763ac83909d",
-        "type": "mqtt-broker",
-        "name": "mqtt broker",
-        "broker": "broker.emqx.io",
-        "port": "1883",
-        "tls": "695940ee1c6c54f6",
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": false,
-        "protocolVersion": 4,
-        "keepalive": 60,
-        "cleansession": true,
-        "autoUnsubscribe": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthRetain": "false",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closeRetain": "false",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willRetain": "false",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
+        "id": "42feb11102a71b6b",
+        "type": "telegram receiver",
+        "z": "1ff1459640c0f8b6",
+        "name": "",
+        "bot": "",
+        "saveDataDir": "",
+        "filterCommands": false,
+        "x": 170,
+        "y": 580,
+        "wires": [
+            [
+                "063dc4bf5b4280cb"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "063dc4bf5b4280cb",
+        "type": "function",
+        "z": "1ff1459640c0f8b6",
+        "name": "Handle /brightness or /stop",
+        "func": "let command = msg.payload.content;\n\nif (command === \"/brightness\") {\n    global.set(\"brightnessOn\", true);\n    global.set(\"userChatId\", msg.payload.chatId);\n    msg.payload.content = \"🔆 Brightness updates started!\";\n    return msg;\n} else if (command === \"/stop\") {\n    global.set(\"brightnessOn\", false);\n    msg.payload.content = \"🛑 Brightness updates stopped.\";\n    return msg;\n}\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 580,
+        "wires": [
+            [
+                "7018e4183fb3160c"
+            ]
+        ]
+    },
+    {
+        "id": "e23860ced8e13181",
+        "type": "mqtt in",
+        "z": "1ff1459640c0f8b6",
+        "name": "",
+        "topic": "none",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "",
+        "nl": false,
+        "rap": false,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 720,
+        "wires": [
+            [
+                "4661bfbdf28db1a7"
+            ]
+        ]
+    },
+    {
+        "id": "4661bfbdf28db1a7",
+        "type": "switch",
+        "z": "1ff1459640c0f8b6",
+        "name": "If brightnessOn == true",
+        "property": "brightnessOn",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 410,
+        "y": 720,
+        "wires": [
+            [
+                "1cf3904b0b2c52c6"
+            ]
+        ]
+    },
+    {
+        "id": "1cf3904b0b2c52c6",
+        "type": "function",
+        "z": "1ff1459640c0f8b6",
+        "name": "Format brightness",
+        "func": "let chatId = global.get(\"userChatId\") || 0;\n\nmsg.payload = {\n    chatId: chatId,\n    type: \"message\",\n    content: `💡 Brightness: ${msg.payload}%`\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 720,
+        "wires": [
+            [
+                "7018e4183fb3160c"
+            ]
+        ]
+    },
+    {
+        "id": "7018e4183fb3160c",
+        "type": "telegram sender",
+        "z": "1ff1459640c0f8b6",
+        "name": "",
+        "bot": "",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 810,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1c18e3f0beb43156",
+        "type": "mqtt in",
+        "z": "1ff1459640c0f8b6",
+        "name": "",
+        "topic": "none",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 440,
+        "wires": [
+            [
+                "11676f1fa1b63897"
+            ]
+        ]
     },
     {
         "id": "bd254d873ba96cd5",
@@ -266,20 +366,6 @@
         "width": "12",
         "collapse": false,
         "className": ""
-    },
-    {
-        "id": "695940ee1c6c54f6",
-        "type": "tls-config",
-        "name": "",
-        "cert": "",
-        "key": "",
-        "ca": "",
-        "certname": "",
-        "keyname": "",
-        "caname": "",
-        "servername": "",
-        "verifyservercert": false,
-        "alpnprotocol": ""
     },
     {
         "id": "0c120b929ce21277",
